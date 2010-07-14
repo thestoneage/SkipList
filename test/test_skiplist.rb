@@ -25,4 +25,11 @@ class TestSkipList < Test::Unit::TestCase
         assert_equal(nil, @skiplist.search(54), "Should return nil as 54 is not a skiplist member")
     end
 
+    def test_delete
+        @skiplist.insert(@unsorted)
+        @skiplist.delete(52)
+        @sorted.delete(52)
+        assert_equal(@sorted, @skiplist.to_a, "Should be equal")
+    end
+
 end
