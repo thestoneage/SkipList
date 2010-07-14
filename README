@@ -1,0 +1,5 @@
+Quick and dirty implementation of a SkipList in Ruby
+
+A skip list is a data structure used for storing sorted items invented by William Pugh [1]. It has an expected item lookup efficiency of O(log n). 
+
+[1] ftp://ftp.cs.umd.edu/pub/skipLists/skiplists.pdf

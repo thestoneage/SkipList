@@ -9,6 +9,10 @@ class SkipListNode
     def <=>(other)
         @value <=> other.value
     end
+
+    def next
+        @forward[0]
+    end
 end
 
 class Infinity
@@ -53,7 +57,7 @@ class SkipList
     end
 
     def search value
-        if (node_search_path(value).last.forward[0].value == value)
+        if (node_search_path(value).last.next.value == value)
             value
         else
             nil
@@ -62,7 +66,7 @@ class SkipList
 
     def delete value
         search_path = node_search_path value
-        node = search_path.last.forward[0]
+        node = search_path.last.next
         if (node.value == value)
             (0..node.forward.size).each do |level|
                 search_path.pop.forward[level] = node.forward[level]
@@ -71,10 +75,10 @@ class SkipList
     end
 
     def each
-      node = @head.forward[0]
+      node = @head.next
       until (node == @last)
         yield node.value
-        node = node.forward[0]
+        node = node.next
       end
     end
 
@@ -105,15 +109,11 @@ class SkipList
         return str
     end
 
-    def next node
-        node.forward[0]
-    end
-
     def each_node
         node = @head
         until (node == nil)
             yield node
-            node = node.forward[0]
+            node = node.next
         end
     end
 
