@@ -1,9 +1,9 @@
 class SkipListNode
     include Comparable
-    attr_reader :value, :next
+    attr_reader :value, :forward
 
-    def initialize(value, next_nodes)
-        @value, @next = value, next_nodes
+    def initialize(value, forward)
+        @value, @forward = value, forward
     end
 
     def <=>(other)
@@ -30,7 +30,7 @@ class SkipList
     end
 
     def max_level
-        @head.next.size - 1
+        @head.forward.size - 1
     end
 
     def insert item
@@ -47,13 +47,13 @@ class SkipList
         search_path = node_search_path value
         (0..width).each do |level|
             source = search_path.pop
-            new_node.next[level] = source.next[level]
-            source.next[level] = new_node
+            new_node.forward[level] = source.forward[level]
+            source.forward[level] = new_node
         end
     end
 
     def search value
-        if (node_search_path(value).last.next[0].value == value)
+        if (node_search_path(value).last.forward[0].value == value)
             value
         else
             nil
@@ -62,19 +62,19 @@ class SkipList
 
     def delete value
         search_path = node_search_path value
-        node = search_path.last.next[0]
+        node = search_path.last.forward[0]
         if (node.value == value)
-            (0..node.next.size).each do |level|
-                search_path.pop.next[level] = node.next[level]
+            (0..node.forward.size).each do |level|
+                search_path.pop.forward[level] = node.forward[level]
             end
         end
     end
 
     def each
-      node = @head.next[0]
+      node = @head.forward[0]
       until (node == @last)
         yield node.value
-        node = node.next[0]
+        node = node.forward[0]
       end
     end
 
@@ -92,7 +92,7 @@ class SkipList
         str << "\n"
         (0..max_level).each do |level|
             each_node do |node|
-                o = node.next[level]
+                o = node.forward[level]
                 if o
                     p = o.value.to_s
                 else
@@ -105,11 +105,15 @@ class SkipList
         return str
     end
 
+    def next node
+        node.forward[0]
+    end
+
     def each_node
         node = @head
         until (node == nil)
             yield node
-            node = node.next[0]
+            node = node.forward[0]
         end
     end
 
@@ -124,8 +128,8 @@ class SkipList
 
     def find_left_neighbor(level, start_node, value)
         node = start_node
-        while (node.next[level].value < value)
-            node = node.next[level]
+        while (node.forward[level].value < value)
+            node = node.forward[level]
         end
         return node
     end
