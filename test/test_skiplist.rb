@@ -1,5 +1,5 @@
 require "test/unit"
-require "lib/skiplist.rb"
+require "../lib/skiplist.rb"
 
 class TestSkipList < Test::Unit::TestCase
     def setup
