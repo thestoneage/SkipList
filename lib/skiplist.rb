@@ -41,6 +41,49 @@ class SkipList
         end
     end
 
+    def insert_value value
+        width = random_width
+        new_node = SkipListNode.new(value, [@end]*width)
+        search_path = node_search_path value
+        (0..width).each do |level|
+            source = search_path.pop
+            new_node.next[level] = source.next[level]
+            source.next[level] = new_node
+        end
+    end
+
+    def search value
+        if (node_search_path(value).last.next[0].value == value)
+            value
+        else
+            nil
+        end
+    end
+
+    def delete value
+        search_path = node_search_path value
+        node = search_path.last.next[0]
+        if (node.value == value)
+            (0..node.next.size).each do |level|
+                search_path.pop.next[level] = node.next[level]
+            end
+        end
+    end
+
+    def each
+      node = @head.next[0]
+      until (node == @last)
+        yield node.value
+        node = node.next[0]
+      end
+    end
+
+    def to_a
+        a = []
+        each { |e| a << e }
+        return a
+    end
+
     def to_s
         str = ""
         each_node do |node|
@@ -62,54 +105,11 @@ class SkipList
         return str
     end
 
-    def search_value value
-        if (node_search_path(value).last.next[0].value == value)
-            value
-        else
-            nil
-        end
-    end
-
     def each_node
         node = @head
         until (node == nil)
             yield node
             node = node.next[0]
-        end
-    end
-
-    def each
-      node = @head.next[0]
-      until (node == @last)
-        yield node.value
-        node = node.next[0]
-      end
-    end
-
-    def to_a
-        a = []
-        each { |e| a << e }
-        return a
-    end
-
-    def insert_value value
-        width = random_width
-        new_node = SkipListNode.new(value, [@end]*width)
-        search_path = node_search_path value
-        (0..width).each do |level|
-            source = search_path.pop
-            new_node.next[level] = source.next[level]
-            source.next[level] = new_node
-        end
-    end
-
-    def delete_value value
-        search_path = node_search_path value
-        node = search_path.last.next[0]
-        if (node.value == value)
-            (0..node.next.size).each do |level|
-                search_path.pop.next[level] = node.next[level]
-            end
         end
     end
 
