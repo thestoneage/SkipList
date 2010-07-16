@@ -48,7 +48,7 @@ class SkipList
 
     def insert_value value
         width = random_width
-        new_node = SkipListNode.new(value, [@end]*width)
+        new_node = SkipListNode.new(value, [])
         search_path = node_search_path value
         (0..width).each do |level|
             source = search_path.pop
