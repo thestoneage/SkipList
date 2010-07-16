@@ -28,6 +28,7 @@ class Infinity
 end
 
 class SkipList
+    include Enumerable
     def initialize(levels)
         @last  = SkipListNode.new(Infinity.new, [])
         @head = SkipListNode.new("H", [@last]*levels)
