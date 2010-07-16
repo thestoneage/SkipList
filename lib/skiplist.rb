@@ -84,9 +84,7 @@ class SkipList
     end
 
     def to_a
-        a = []
-        each { |e| a << e }
-        return a
+      reduce([], :<<)
     end
 
     def to_s
