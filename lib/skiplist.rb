@@ -47,11 +47,9 @@ class SkipList
     end
 
     def insert_value value
-        width = random_width
         new_node = SkipListNode.new(value, [])
         search_path = node_search_path value
-        (0..width).each do |level|
-            source = search_path.pop
+        search_path.reverse[0, random_width].each_with_index do |source, level|
             new_node.forward[level] = source.forward[level]
             source.forward[level] = new_node
         end
@@ -60,8 +58,6 @@ class SkipList
     def search value
         if (node_search_path(value).last.next.value == value)
             value
-        else
-            nil
         end
     end
 
@@ -69,8 +65,8 @@ class SkipList
         search_path = node_search_path value
         node = search_path.last.next
         if (node.value == value)
-            (0..node.forward.size).each do |level|
-                search_path.pop.forward[level] = node.forward[level]
+            search_path.reverse[0,node.forward.size].each_with_index do |n, level|
+                n.forward[level] = node.forward[level]
             end
         end
     end
@@ -81,6 +77,8 @@ class SkipList
         yield node.value
         node = node.next
       end
+
+      self
     end
 
     def to_a
@@ -117,16 +115,16 @@ class SkipList
     end
 
     def node_search_path value
-        path = []
         node = @head
-        (0..max_level).reverse_each do |level|
-           path << find_left_neighbor(level, node, value)
+        max_level.downto(0).reduce([]) do |path, level|
+           path.tap {|path|
+             node = find_left_neighbor(level, node, value)
+             path << node
+           }
         end
-        return path
     end
 
-    def find_left_neighbor(level, start_node, value)
-        node = start_node
+    def find_left_neighbor(level, node, value)
         while (node.forward[level].value < value)
             node = node.forward[level]
         end
@@ -134,7 +132,7 @@ class SkipList
     end
 
     def random_width
-        h = 0
+        h = 1
         while (rand < 0.5 and h <= max_level)
             h += 1
         end
