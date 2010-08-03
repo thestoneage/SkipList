@@ -6,7 +6,7 @@ require "skiplist.rb"
 class TestSkipList < Test::Unit::TestCase
     def setup
         @unsorted = [84, 52, 53, 35, 46, 18, 95, 88, 26, 4]
-        @sorted   = [4, 18, 26, 35, 46, 52, 53, 84, 88, 95]
+        @sorted   = @unsorted.sort
         @skiplist = SkipList.new(16)
     end
 
