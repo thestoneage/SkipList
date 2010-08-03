@@ -89,13 +89,7 @@ class SkipList
     str << "\n"
     (0..max_level).each do |level|
       each_node do |node|
-        o = node.forward[level]
-        if o
-          p = o
-        else
-          p = 'n'
-        end
-        str << " #{p} "
+        str << " #{node.forward[level] || 'n'} "
       end
       str << "\n"
     end
