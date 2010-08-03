@@ -38,10 +38,6 @@ class SkipList
     @head = SkipListNode.new('H', [@last]*levels)
   end
 
-  def max_level
-    @head.forward.size - 1
-  end
-
   def << value
     new_node = SkipListNode.new(value, [])
     search_path = node_search_path value
@@ -49,6 +45,10 @@ class SkipList
       new_node.forward[level] = source.forward[level]
       source.forward[level] = new_node
     end
+  end
+
+  def insert *elements
+    elements.each(&method(:<<))
   end
 
   def search value
@@ -102,6 +102,12 @@ class SkipList
     return str
   end
 
+  private
+
+  def max_level
+    @head.forward.size - 1
+  end
+
   def each_node
     node = @head
     until node.nil?
@@ -133,9 +139,5 @@ class SkipList
       h += 1
     end
     return h
-  end
-
-  def insert *elements
-    elements.each(&method(:<<))
   end
 end
