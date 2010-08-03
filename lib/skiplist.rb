@@ -23,7 +23,7 @@ class << (Infinity = Object.new)
     end
 
     def to_s
-        "E"
+        'E'
     end
 end
 
@@ -31,7 +31,7 @@ class SkipList
     include Enumerable
     def initialize(levels)
         @last  = SkipListNode.new(Infinity, [])
-        @head = SkipListNode.new("H", [@last]*levels)
+        @head = SkipListNode.new('H', [@last]*levels)
     end
 
     def max_level
@@ -86,9 +86,9 @@ class SkipList
     end
 
     def to_s
-        str = ""
+        str = ''
         each_node do |node|
-            str << (" " + node.value.to_s + " ")
+            str << (' ' + node.value.to_s + ' ')
         end
         str << "\n"
         (0..max_level).each do |level|
@@ -97,9 +97,9 @@ class SkipList
                 if o
                     p = o.value.to_s
                 else
-                    p = "n"
+                    p = 'n'
                 end
-                str << (" " + p + " ")
+                str << (' ' + p + ' ')
             end
             str << "\n"
         end
