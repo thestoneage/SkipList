@@ -13,6 +13,10 @@ class SkipListNode
   def next
     @forward[0]
   end
+
+  def to_s
+    value.to_s
+  end
 end
 
 class << (Infinity = Object.new)
@@ -80,14 +84,14 @@ class SkipList
   def to_s
     str = ''
     each_node do |node|
-      str << " #{node.value} "
+      str << " #{node} "
     end
     str << "\n"
     (0..max_level).each do |level|
       each_node do |node|
         o = node.forward[level]
         if o
-          p = o.value.to_s
+          p = o
         else
           p = 'n'
         end
