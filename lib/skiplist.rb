@@ -108,7 +108,7 @@ class SkipList
 
     def each_node
         node = @head
-        until (node == nil)
+        until node.nil?
             yield node
             node = node.next
         end
