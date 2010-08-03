@@ -140,7 +140,7 @@ class SkipList
     end
 
     def insert_array array
-        array.each { |e| insert_value e }
+        array.each(&method(:insert_value))
     end
 end
 
