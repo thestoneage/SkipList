@@ -81,7 +81,7 @@ class SkipList
     reduce([], :<<)
   end
 
-  def to_s
+  def inspect
     str = ''
     each_node do |node|
       str << " #{node} "
