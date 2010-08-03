@@ -18,7 +18,7 @@ end
 class << (Infinity = Object.new)
     include Comparable
 
-    def <=> other
+    def <=> _
         return 1
     end
 
