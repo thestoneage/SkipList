@@ -42,11 +42,11 @@ class SkipList
         if (item.respond_to? :each)
             insert_array item
         else
-            insert_value item
+            self << item
         end
     end
 
-    def insert_value value
+    def << value
         new_node = SkipListNode.new(value, [])
         search_path = node_search_path value
         search_path.reverse[0, random_width].each_with_index do |source, level|
@@ -140,7 +140,7 @@ class SkipList
     end
 
     def insert_array array
-        array.each(&method(:insert_value))
+        array.each(&method(:<<))
     end
 end
 
