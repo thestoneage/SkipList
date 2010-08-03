@@ -1,37 +1,37 @@
-class SkipListNode
-  include Comparable
-  attr_reader :value, :forward
-
-  def initialize(value, forward)
-    @value, @forward = value, forward
-  end
-
-  def <=>(other)
-    @value <=> other.value
-  end
-
-  def next
-    @forward[0]
-  end
-
-  def to_s
-    value.to_s
-  end
-end
-
-class << (Infinity = Object.new)
-  include Comparable
-
-  def <=> _
-    return 1
-  end
-
-  def to_s
-    'E'
-  end
-end
-
 class SkipList
+  class SkipListNode
+    include Comparable
+    attr_reader :value, :forward
+
+    def initialize(value, forward)
+      @value, @forward = value, forward
+    end
+
+    def <=>(other)
+      @value <=> other.value
+    end
+
+    def next
+      @forward[0]
+    end
+
+    def to_s
+      value.to_s
+    end
+  end
+
+  class << (Infinity = Object.new)
+    include Comparable
+
+    def <=> _
+      return 1
+    end
+
+    def to_s
+      'E'
+    end
+  end
+
   include Enumerable
   def initialize(levels)
     @last = SkipListNode.new(Infinity, [])
