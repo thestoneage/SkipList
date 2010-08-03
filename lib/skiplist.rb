@@ -88,7 +88,7 @@ class SkipList
     def to_s
         str = ''
         each_node do |node|
-            str << (' ' + node.value.to_s + ' ')
+            str << " #{node.value} "
         end
         str << "\n"
         (0..max_level).each do |level|
@@ -99,7 +99,7 @@ class SkipList
                 else
                     p = 'n'
                 end
-                str << (' ' + p + ' ')
+                str << " #{p} "
             end
             str << "\n"
         end
