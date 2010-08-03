@@ -15,7 +15,7 @@ class SkipListNode
     end
 end
 
-class Infinity
+class << (Infinity = Object.new)
     include Comparable
 
     def <=> other
@@ -30,7 +30,7 @@ end
 class SkipList
     include Enumerable
     def initialize(levels)
-        @last  = SkipListNode.new(Infinity.new, [])
+        @last  = SkipListNode.new(Infinity, [])
         @head = SkipListNode.new("H", [@last]*levels)
     end
 
