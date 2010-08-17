@@ -61,7 +61,7 @@ class SkipList
     search_path = node_search_path value
     node = search_path.last.next
     if (node.value == value)
-      search_path.reverse[0,node.forward.size].each_with_index do |n, level|
+      search_path.reverse[0, node.forward.size].each_with_index do |n, level|
         n.forward[level] = node.forward[level]
       end
     end
@@ -111,9 +111,8 @@ class SkipList
   end
 
   def node_search_path value
-    node = @head
     max_level.downto(0).map do |level|
-        find_left_neighbor(level, node, value)
+        find_left_neighbor(level, @head, value)
     end
   end
 
