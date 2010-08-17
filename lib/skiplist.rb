@@ -41,7 +41,7 @@ class SkipList
   def << value
     new_node = SkipListNode.new(value, [])
     search_path = node_search_path value
-    search_path.reverse[0, random_width].each_with_index do |source, level|
+    search_path.reverse[0, random_height].each_with_index do |source, level|
       new_node.forward[level] = source.forward[level]
       source.forward[level] = new_node
     end
@@ -127,7 +127,7 @@ class SkipList
     return node
   end
 
-  def random_width
+  def random_height
     h = 1
     while (rand < 0.5 and h <= max_level)
       h += 1
