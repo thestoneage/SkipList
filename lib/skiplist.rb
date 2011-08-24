@@ -111,8 +111,9 @@ class SkipList
   end
 
   def node_search_path value
+    node = @head
     max_level.downto(0).map do |level|
-        find_left_neighbor(level, @head, value)
+        node = find_left_neighbor(level, node, value)
     end
   end
 
